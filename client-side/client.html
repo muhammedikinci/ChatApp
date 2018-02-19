@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html ng-app="chat-app">
+<head>
+	<title></title>
+	<meta charset="utf-8">
+<script type="text/javascript" src="socket/jquery.js"></script>
+<script type="text/javascript" src="socket/angular.js"></script>
+<script type="text/javascript" src="socket/app.js"></script>
+<script type="text/javascript" src="socket/socket.io.js"></script>
+<script type="text/javascript" src="socket/route.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<style type="text/css">
+	.chat-panel{
+		bottom:0%;
+		height:0%;
+		background-color:#d3d3d3;
+		width: 230px;
+		right: 10%;
+	}
+	.outer-chat{
+		position:absolute;
+		top:0%;
+		left: 85%;
+		height: 100%;
+	}
+	.chat-buttons{
+		position:absolute;
+		top:90%;
+	}
+	#chatBtn{
+		bottom:0%;
+	}
+	.current-chat-outer{
+		position:absolute;
+		bottom:0%;
+		left: 50%;
+		height: 50%;
+		background-color: #eaeaea;
+		margin: 0;
+		padding: 0;
+	}
+	.CurrentChatBoxTopBar{
+		height: 10%;
+		background-color: #71C9CE;
+		padding: 5px;
+		text-align: center;
+	}
+	.CurrentChatBox-Middle{
+		height: 75%;
+		background-color:#E3FDFD; 
+		overflow-y: scroll;
+	}
+	.chat-texts{  word-wrap: break-word; }
+	.CurrentChatBox-Bottom{
+		height: 15%;
+	}
+</style>
+</head>
+<body ng-controller="index" style="margin: 0; padding: 0;">
+
+
+	<!-- Real Body Start -->
+
+	<div class="form-group">
+		<label for="name">Username</label>
+		<input type="text" class="form-control" ng-model="username" />
+	</div>
+	<div class="form-group">
+		<label for="name">Password</label>
+		<input type="password" class="form-control" ng-model="password" />
+	</div>
+	<div class="form-group">
+		<button class="btn btn-default" ng-click="login()">Giriş</button>
+	</div>
+	
+	<div class="col-md-4">
+		<div class="form-group">
+			<label for="name">Username</label>
+			<input type="text" class="form-control" ng-model="username_html" />
+		</div>
+		<div class="form-group">
+			<button class="btn btn-default" ng-click="openChat(username_html)">Start Chat</button>
+		</div>
+	</div>
+
+	<!-- Real Body End -->
+
+
+	<div class="outer-chat">
+		<div class="chat-panel">
+			<div class="list-group">
+			  <span ng-repeat="user in List">
+			  	<button 
+				  	type="button" 
+				  	class="list-group-item list-group-item-action" 
+				  	ng-click="openChat(user.UserName)">
+				  	<span ng-if="!user.ActiveMessage || user.ActiveMessage == 0">{{ user.UserName }}</span>
+				  	<span ng-if="user.ActiveMessage == 1"><i class="text-success">{{ user.UserName }}</i></span>
+			  	</button>
+			  </span>
+			</div>
+		</div>
+		<div class="chat-buttons">
+			<button class="btn btn-success col-md-12" id="chatBtn" ng-click="getAllUsers()">Mesajlar</button>
+		</div>
+	</div>
+
+	<div class="current-chat-outer col-md-4">
+		<div class="CurrentChatBoxTopBar col-md-12">
+			<h4 id="CurrentChatBox-UserName">
+			{{CurrentChatUserName}}
+			</h4>
+		</div>
+		
+		<div class="CurrentChatBox-Middle col-md-12" id="CurrentChatBox-Middle">
+			<ul class="list-group">
+			  <div class="list-group-item " ng-repeat="data in OpenedChatMessageDatas">
+			  	<div ng-if="data.currentUserName == username">
+			  		<li class="list-group-item chat-texts" style="text-align: right; background-color: silver">{{data.message}}</li>
+			  	</div>
+			  	<div ng-if="data.currentUserName != username">
+			  		<li class="list-group-item chat-texts" style="text-align: left;">{{data.message}}</li>
+			  	</div>
+			  </div>
+			</ul>
+		</div>
+		<div  class="CurrentChatBox-Bottom col-md-12">
+			<input ng-click="InputBoxClick()" type="" name="" ng-model="MessageBoxInput" my-enter="sendMessage()" class="form-control"><button class="btn btn-default col-md-12" ng-click="sendMessage()">{{SenderError}} </button>
+		</div>
+	</div>
+
+
+<script type="text/javascript">
+$(document).ready(function()
+ {
+    $("#chatBtn").click(function()
+    {
+        $(".chat-panel").css("height","100%");
+    });
+ });
+</script>
+</body>
+</html>
