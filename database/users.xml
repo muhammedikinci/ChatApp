@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 4.7.4
+- https://www.phpmyadmin.net
+-
+- Anamakine: 127.0.0.1
+- Üretim Zamanı: 19 Şub 2018, 19:19:40
+- Sunucu sürümü: 5.7.18-log
+- PHP Sürümü: 7.1.11
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="test" collation="latin1_swedish_ci" charset="latin1">
+            <pma:table name="users">
+                CREATE TABLE `users` (
+                  `Usr_ID` int(11) NOT NULL AUTO_INCREMENT,
+                  `Usr_Name` text COLLATE utf8_turkish_ci NOT NULL,
+                  `Usr_Pass` text COLLATE utf8_turkish_ci NOT NULL,
+                  `Usr_Messanger_IDList` text COLLATE utf8_turkish_ci NOT NULL,
+                  `Notifications` text COLLATE utf8_turkish_ci NOT NULL,
+                  PRIMARY KEY (`Usr_ID`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_turkish_ci;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+</pma_xml_export>
