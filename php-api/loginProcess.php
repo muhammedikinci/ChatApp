@@ -73,7 +73,7 @@ class Login{
 	function TryConnectToDB(){
 		try
 		{
-			$this->Database = new PDO("mysql:host=localhost;dbname=soneqeqy_c2c;charset=utf8",'soneqeqy_c2c','c2c321');
+			$this->Database = new PDO("mysql:host=localhost;dbname=;charset=utf8",'','');
 		}
 		catch(PDOException $e)
 		{
